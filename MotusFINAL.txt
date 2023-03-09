@@ -1,0 +1,87 @@
+Algorithme "Motus"
+Variables indicées : CC : X[tailleMotATrouve]
+					 Caractère : lettresTrouvees[tailleMotATrouve], lettresTrouveesActuelles[tailleMotATrouve]
+Variables : numérique : nbEssai, tailleMotATrouve, I, J, K, A, L
+			CC : motASaisir, motATrouve, extractLettre
+Début
+
+Afficher "Veuillez entrer un mot avec une taille supérieur à 5"
+Saisir motATrouve
+
+tailleMotATrouve <- longueur(motATrouve) 
+
+TantQue tailleMotATrouve < 5 
+
+	Afficher "Erreur de saisie. Veuillez recommencer" 
+	Saisir motATrouve 
+	tailleMotATrouve <- longueur(motATrouve) 
+
+FTantQue 
+
+Pour I allant de 1 à tailleMotATrouve 
+	extractLettre <- (motATrouve, I, 1) 
+	X[I] <- extractLettre 
+FPour 
+
+nbEssai <- tailleMotATrouve - 2 
+Essais <- nbEssai 
+
+Afficher "La taille du mot est de ", tailleMotATrouve ,". Vous avez donc ", nbEssai ," essais." 
+
+Pour J allant de 1 à taille
+	lettresTrouvees[J] <- '_'
+FPour
+
+Pour A allant de 1 à nbEssai
+	Veuillez saisir votre essai avec la même taille que le mot a deviné. Si vous voulez abandonné, tapez SOL. Il vous reste ", Essais ," essais. : 
+	Saisir motASaisir
+	
+	Si motASaisir = "SOL" Alors Afficher "Vous avez tapé SOL. Vous avez abandonné et le mot était ", motATrouve 
+								A <- nbEssai 
+
+						  Sinon 
+
+								TantQue tailleMotATrouve <> tailleMotASaisir 
+									
+									Afficher "Erreur de saisie. Veuillez resaisir votre essai avec la même taille que le mot a deviné. Si vous voulez abandonné, tapez SOL. Il vous reste ", Essais ," essais." 
+
+									Saisir motASaisir 
+
+									tailleMotASaisir <- longueur(motASaisir) 
+
+								FTantQue 
+								
+								Si motASaisir = motATrouve Alors Afficher "BRAVO ! Vous avez trouvé le bon mot qu'était ", motATrouve ,"." 
+																		  A <- nbEssai 
+														   Sinon 
+														   
+																 Pour K allant de 1 à taille
+																	lettresTrouveesActuelles - '_' 
+																 FPour 
+																 
+																 Pour I allant de 1 à taille
+																	(*Si le caractère du mot a saisir a la position I est égale au caractère dans le vecteur X*)
+																	Si motASaisir.charAt(I) == X[I].charAt(0) Alors lettresTrouveesActuelles[I] <- X[I]
+																									  Sinon lettresTrouveesActuelles[I] <- lettresTrouvees[I]
+																	
+																 FPour
+																 
+																 lettresTrouvees <- lettresTrouveesActuelles
+																 
+																 Afficher "Voici les lettres qui sont communes bien placées"
+																 
+																 Pour L allant de 1 à taille
+																	Afficher lettresTrouvees[L]
+																 FPour
+																 
+																 Essais <- Essais - 1
+																 
+								FSI
+   Sinon 
+
+FPour
+
+
+Si Essais = 0 Alors Afficher "PERDU ! Vous n'avez pas trouvé le bon mot qu'était ", motATrouve ,"."
+
+Fin
